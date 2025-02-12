@@ -87,6 +87,12 @@ anime = {
         "Genre": {"Action","Supernatural"},
         "Rank": 10,
     },
+    "placeholder": {
+        "Episodes": 194,
+        "Year": 2012,
+        "Genre": {"Action","Supernatural"},
+        "Rank": 11,
+    },
 }
 
 def sortgenre():
@@ -100,11 +106,11 @@ def sortgenre():
 
 
 def sortranking():
-    rank = int(promptint("What rank would you like to search?",[1,10]))
+    rank = int(promptint("What rank would you like to search?",[1,len(anime.keys())+1]))
     for i in list(anime.keys()):
         if rank is anime[i]["Rank"]:
             print(f"{i}:\n     Number of Episodes: {anime[i]["Episodes"]}\n     Air Date: {anime[i]["Year"]}\n     Genres: {anime[i]["Genre"]}")
-    prompt("What would you like to do?",["Search another genre","Back to main menu"],[sortranking,start])
+    prompt("What would you like to do?",["Search another rank","Back to main menu"],[sortranking,start])
 
 def top10list():
     rankPair = dict()
