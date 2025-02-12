@@ -1,5 +1,5 @@
 
-def prompt(demand: str, choices: list[str], funcs: list[callable], returns = False):
+def prompt(demand: str, choices: list[str], funcs = None, returns = False):
     print(demand)
     for i in range(len(choices)):
         print(f"[{i+1}] : {choices[i]}")
@@ -10,7 +10,7 @@ def prompt(demand: str, choices: list[str], funcs: list[callable], returns = Fal
             if returns == False:
                 funcs[int(choice) - 1]()
             else:
-                pass
+                return choices[int(choice)-1]
         else:
             print("Please enter an accepted value.")
             prompt(demand, choices, funcs)
@@ -77,7 +77,7 @@ anime = {
     },
     "Demon Slayer": {
         "Episodes": 63,
-        "Year": 1019,
+        "Year": 2019,
         "Genre": {"Action","Dark Fantasy"},
         "Rank": 7,
     },
@@ -89,23 +89,37 @@ anime = {
     },
 }
 
-def sortGenre():
-    animeList = list[anime.keys()]
-    prompt("Which genre would you like to search?",["Shonen","Action","Seinen","Fantasy","Dark Fantasy","Historic","Steampunk","Supernatural","Isekai"], returns=True)
-    pass
+def sortgenre():
+    animeList = list(anime.keys())
+    genre = prompt("Which genre would you like to search?",["Shonen","Action","Seinen","Fantasy","Dark Fantasy","Historic","Steampunk","Supernatural","Isekai","Martial Arts"], returns=True)
+    print(f"Searching {genre}...")
+    for i in animeList:
+        if genre in anime[i]["Genre"]:
+            print(f"{i}:\n     Number of Episodes: {anime[i]["Episodes"]}\n     Air Date: {anime[i]["Year"]}\n     Genres: {anime[i]["Genre"]}")
+    prompt("What would you like to do?",["Search another genre","Back to main menu"],[sortgenre,start])
 
-def sortRanking():
-    pass
 
-def top10List():
-    pass
+def sortranking():
+    rank = int(promptint("What rank would you like to search?",[1,10]))
+    for i in list(anime.keys()):
+        if rank is anime[i]["Rank"]:
+            print(f"{i}:\n     Number of Episodes: {anime[i]["Episodes"]}\n     Air Date: {anime[i]["Year"]}\n     Genres: {anime[i]["Genre"]}")
+    prompt("What would you like to do?",["Search another genre","Back to main menu"],[sortranking,start])
+
+def top10list():
+    rankPair = dict()
+    for i in anime.keys():
+        rankPair.update({anime[i]["Rank"]:i})
+    for i in range(1,len(rankPair.keys())+1):
+        print(f"{f"{i}.":<3} {rankPair.get(i)}")
+    prompt("What would you like to do?", ["Pick a rank for more info", "Back to main menu"], [sortranking,start])
 
 def leave():
     print("Exited Program")
     quit()
 
 def start():
-    print("Daniel's Top 10 Anime List")
-    prompt("What would you like to do?",["Sort by Genre","Sort by Ranking","My top 10","Exit program"],[sortGenre,sortRanking,top10List,leave])
+    print("Daniel's Top 10 Anime List\n--------------------------")
+    prompt("What would you like to do?",["Sort by Genre","Search by Ranking","My top 10","Exit program"],[sortgenre,sortranking,top10list,leave])
 
 start()
