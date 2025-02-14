@@ -13,10 +13,10 @@ def prompt(demand: str, choices: list[str], funcs = None, returns = False):
                 return choices[int(choice)-1]
         else:
             print("Please enter an accepted value.")
-            prompt(demand, choices, funcs)
+            return prompt(demand, choices, funcs, returns)
     else:
         print("Please enter an accepted value.")
-        prompt(demand,choices,funcs)
+        return prompt(demand,choices,funcs,returns)
 
 def promptint(demand: str, range : list[int]):
     chosenint = input(f"{demand} : ")
@@ -86,12 +86,6 @@ anime = {
         "Year": 2012,
         "Genre": {"Action","Supernatural"},
         "Rank": 10,
-    },
-    "placeholder": {
-        "Episodes": 194,
-        "Year": 2012,
-        "Genre": {"Action","Supernatural"},
-        "Rank": 11,
     },
 }
 
